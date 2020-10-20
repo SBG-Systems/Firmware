@@ -41,6 +41,7 @@ class MavlinkSerialPort():
         self.baudrate = 0
         self._debug = debug
         self.buf = ''
+        self.rtcm = open('rtcm', 'rb')
         self.port = devnum
         self.debug("Connecting with MAVLink to %s ..." % portname)
         self.mav = mavutil.mavlink_connection(portname, autoreconnect=True, baud=baudrate)
@@ -99,6 +100,15 @@ class MavlinkSerialPort():
                     self.debug("read 0x%x" % ord(b), 2)
             return ret
         return ''
+
+    def sendRtcm(self):
+           buf = [0]* 180
+           data = self.rtcm.read()
+           if (len(data) > 0):
+               for x in range (0, len(data), 180):
+                   d = data[x:x+180]
+                   buf[0:len(d)] = d
+                   self.mav.mav.gps_rtcm_data_send(0, len(d), buf)
 
 
 def main():
@@ -215,6 +225,8 @@ def main():
                 mav_serialport.mav.mav.heartbeat_send(mavutil.mavlink.MAV_TYPE_GCS,
                         mavutil.mavlink.MAV_AUTOPILOT_GENERIC, 0, 0, 0)
                 next_heartbeat_time = heartbeat_time + 1
+
+            mav_serialport.sendRtcm()
 
     except serial.serialutil.SerialException as e:
         print(e)
