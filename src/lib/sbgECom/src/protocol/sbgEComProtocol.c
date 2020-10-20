@@ -217,6 +217,7 @@ SbgErrorCode sbgEComProtocolReceive(SbgEComProtocol *pHandle, uint8_t *pMsgClass
 						//
 						memmove(pHandle->rxBuffer, pHandle->rxBuffer+i, pHandle->rxBufferSize-i);
 						pHandle->rxBufferSize = pHandle->rxBufferSize-i;
+SBG_LOG_DEBUG("Remove all dummy received bytes before the begining of the frame");
 					}
 
 					//
@@ -373,6 +374,7 @@ SbgErrorCode sbgEComProtocolReceive(SbgEComProtocol *pHandle, uint8_t *pMsgClass
 						// We have an invalid frame CRC and we will directly return this error
 						//
 						errorCode = SBG_INVALID_CRC;
+SBG_LOG_DEBUG("We have an invalid frame CRC and we will directly return this error");
 					}
 
 					//
