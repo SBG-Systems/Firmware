@@ -468,6 +468,10 @@ int GPS::setBaudrate(unsigned baud)
 
 	case 230400: speed = B230400; break;
 
+	case 460800: speed = B460800; break;
+
+	case 921600: speed = B921600; break;
+
 	default:
 		PX4_ERR("ERR: unknown baudrate: %d", baud);
 		return -EINVAL;
@@ -714,7 +718,7 @@ GPS::run()
 				break;
 
 			case GPS_DRIVER_MODE_SBG:
-				_helper = new px4::sbg::GPSDriver(&GPS::callback, this, &_report_gps_pos, heading_offset, _serial_fd);
+				_helper = new px4::sbg::GPSDriver(&GPS::callback, this, &_report_gps_pos, heading_offset);
 				break;
 
 			default:
