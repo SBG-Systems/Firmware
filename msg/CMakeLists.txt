@@ -113,7 +113,6 @@ set(msg_files
 	rpm.msg
 	safety.msg
 	satellite_info.msg
-	sbg_bin.msg
 	sensor_accel.msg
 	sensor_accel_fifo.msg
 	sensor_baro.msg
