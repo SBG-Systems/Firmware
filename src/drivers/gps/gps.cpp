@@ -338,10 +338,6 @@ int GPS::callback(GPSCallbackType type, void *data1, int data2, void *user)
 	case GPSCallbackType::setClock:
 		px4_clock_settime(CLOCK_REALTIME, (timespec *)data1);
 		break;
-
-	case GPSCallbackType::handleInjectDataTopic:
-		gps->handleInjectDataTopic();
-		break;
 	}
 
 	return 0;
