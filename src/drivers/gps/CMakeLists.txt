@@ -46,9 +46,11 @@ px4_add_module(
 		devices/src/ashtech.cpp
 		devices/src/ubx.cpp
 		devices/src/rtcm.cpp
+		devices/src/sbg_gps.cpp
 		devices/src/emlid_reach.cpp
 	MODULE_CONFIG
 		module.yaml
 	DEPENDS
+		sbgECom
 		git_gps_devices
 	)
