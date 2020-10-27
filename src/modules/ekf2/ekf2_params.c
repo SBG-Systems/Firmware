@@ -98,7 +98,7 @@ PARAM_DEFINE_FLOAT(EKF2_GPS_DELAY, 110);
  * @reboot_required true
  * @decimal 1
  */
-PARAM_DEFINE_FLOAT(EKF2_OF_DELAY, 5);
+PARAM_DEFINE_FLOAT(EKF2_OF_DELAY, 20);
 
 /**
  * Range finder measurement delay relative to IMU measurements
@@ -1072,7 +1072,7 @@ PARAM_DEFINE_FLOAT(EKF2_RNG_PITCH, 0.0f);
  * @reboot_required true
  * @volatile
  * @category system
- * @unit mgauss
+ * @unit gauss
  * @decimal 3
  */
 PARAM_DEFINE_FLOAT(EKF2_MAGBIAS_X, 0.0f);
@@ -1087,7 +1087,7 @@ PARAM_DEFINE_FLOAT(EKF2_MAGBIAS_X, 0.0f);
  * @reboot_required true
  * @volatile
  * @category system
- * @unit mgauss
+ * @unit gauss
  * @decimal 3
  */
 PARAM_DEFINE_FLOAT(EKF2_MAGBIAS_Y, 0.0f);
@@ -1102,7 +1102,7 @@ PARAM_DEFINE_FLOAT(EKF2_MAGBIAS_Y, 0.0f);
  * @reboot_required true
  * @volatile
  * @category system
- * @unit mgauss
+ * @unit gauss
  * @decimal 3
  */
 PARAM_DEFINE_FLOAT(EKF2_MAGBIAS_Z, 0.0f);
@@ -1122,7 +1122,7 @@ PARAM_DEFINE_INT32(EKF2_MAGBIAS_ID, 0);
  *
  * @group EKF2
  * @reboot_required true
- * @unit mgauss^2
+ * @unit gauss^2
  * @decimal 8
  */
 PARAM_DEFINE_FLOAT(EKF2_MAGB_VREF, 2.5E-7f);
