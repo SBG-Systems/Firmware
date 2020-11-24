@@ -42,7 +42,7 @@
  * @value 1 Enable
  * @group GPS
  */
-PARAM_DEFINE_INT32(GPS_DUMP_COMM, 0);
+PARAM_DEFINE_INT32(GPS_DUMP_COMM, 1);
 
 /**
  * u-blox GPS dynamic platform model
