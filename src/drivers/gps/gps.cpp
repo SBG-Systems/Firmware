@@ -65,6 +65,7 @@
 #include "devices/src/emlid_reach.h"
 #include "devices/src/mtk.h"
 #include "devices/src/ubx.h"
+#include "devices/src/sbg_gps.h"
 
 #ifdef __PX4_LINUX
 #include <linux/spi/spidev.h>
@@ -78,7 +79,8 @@ typedef enum {
 	GPS_DRIVER_MODE_UBX,
 	GPS_DRIVER_MODE_MTK,
 	GPS_DRIVER_MODE_ASHTECH,
-	GPS_DRIVER_MODE_EMLIDREACH
+	GPS_DRIVER_MODE_EMLIDREACH,
+	GPS_DRIVER_MODE_SBG
 } gps_driver_mode_t;
 
 /* struct for dynamic allocation of satellite info data */
@@ -764,6 +766,10 @@ GPS::run()
 				_helper = new GPSDriverEmlidReach(&GPS::callback, this, &_report_gps_pos, _p_report_sat_info);
 				break;
 
+			case GPS_DRIVER_MODE_SBG:
+				_helper = new px4::sbg::GPSDriver(&GPS::callback, this, &_report_gps_pos, heading_offset);
+				break;
+
 			default:
 				break;
 			}
@@ -865,6 +871,10 @@ GPS::run()
 					break;
 
 				case GPS_DRIVER_MODE_EMLIDREACH:
+					_mode = GPS_DRIVER_MODE_SBG;
+					break;
+
+				case GPS_DRIVER_MODE_SBG:
 					_mode = GPS_DRIVER_MODE_UBX;
 					px4_usleep(500000); // tried all possible drivers. Wait a bit before next round
 					break;
@@ -925,6 +935,10 @@ GPS::print_status()
 
 		case GPS_DRIVER_MODE_EMLIDREACH:
 			PX4_INFO("protocol: EMLIDREACH");
+			break;
+
+		case GPS_DRIVER_MODE_SBG:
+			PX4_INFO("protocol: SBG");
 			break;
 
 		default:
@@ -1096,7 +1110,7 @@ $ gps reset warm
 
 	PRINT_MODULE_USAGE_PARAM_STRING('i', "uart", "spi|uart", "GPS interface", true);
 	PRINT_MODULE_USAGE_PARAM_STRING('j', "uart", "spi|uart", "secondary GPS interface", true);
-	PRINT_MODULE_USAGE_PARAM_STRING('p', nullptr, "ubx|mtk|ash|eml", "GPS Protocol (default=auto select)", true);
+	PRINT_MODULE_USAGE_PARAM_STRING('p', nullptr, "ubx|mtk|ash|eml|sbg", "GPS Protocol (default=auto select)", true);
 
 	PRINT_MODULE_USAGE_DEFAULT_COMMANDS();
 	PRINT_MODULE_USAGE_COMMAND_DESCR("reset", "Reset GPS device");
@@ -1242,6 +1256,9 @@ GPS *GPS::instantiate(int argc, char *argv[], Instance instance)
 
 			} else if (!strcmp(myoptarg, "eml")) {
 				mode = GPS_DRIVER_MODE_EMLIDREACH;
+
+			} else if (!strcmp(myoptarg, "sbg")) {
+				mode = GPS_DRIVER_MODE_SBG;
 
 			} else {
 				PX4_ERR("unknown protocol: %s", myoptarg);
