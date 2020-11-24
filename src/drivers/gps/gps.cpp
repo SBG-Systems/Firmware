@@ -88,7 +88,7 @@ struct GPS_Sat_Info {
 	satellite_info_s _data;
 };
 
-static constexpr int TASK_STACK_SIZE = 1760;
+static constexpr int TASK_STACK_SIZE = 9952;
 
 
 class GPS : public ModuleBase<GPS>
