@@ -296,6 +296,8 @@ GPS::GPS(const char *path, gps_driver_mode_t mode, GPSHelper::Interface interfac
 		case 3: _mode = GPS_DRIVER_MODE_ASHTECH; break;
 
 		case 4: _mode = GPS_DRIVER_MODE_EMLIDREACH; break;
+
+		case 5: _mode = GPS_DRIVER_MODE_SBG; break;
 		}
 	}
 
